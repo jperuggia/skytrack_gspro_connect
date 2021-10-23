@@ -1,0 +1,7 @@
+device_id: 'skytrack'
+units: 'Yards'
+club_data: False
+gspro:
+  api_version: 1
+  ip_address: 127.0.0.1
+  port: 921
