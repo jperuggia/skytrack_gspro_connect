@@ -6,5 +6,5 @@ gspro:
   ip_address: 127.0.0.1
   port: 921
 garmin:
-  ip_address: 192.168.0.0 # change this to your ip from garmin
-  port: 1234 # chnage this to your port from garmin
+  ip_address: 127.0.0.3 # change this to your ip from garmin
+  port: 9002 # chnage this to your port from garmin

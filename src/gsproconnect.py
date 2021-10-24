@@ -1,6 +1,7 @@
 import socket
 import logging
 import json
+import asyncio
 from golf_shot import BallData, ClubHeadData
 
 # configure log.
@@ -10,6 +11,19 @@ logging.basicConfig(
     level=logging.DEBUG,
 )
 _logger = logging.getLogger(__file__)
+
+
+def remove_none(obj):
+    if isinstance(obj, (list, tuple, set)):
+        return type(obj)(remove_none(x) for x in obj if x is not None)
+    elif isinstance(obj, dict):
+        return type(obj)(
+            (remove_none(k), remove_none(v))
+            for k, v in obj.items()
+            if k is not None and v is not None
+        )
+    else:
+        return obj
 
 
 class GSProConnect:
@@ -40,8 +54,9 @@ class GSProConnect:
                 "IsHeartBeat": True,
             },
         }
-        self._socket.sendall(json.dumps(payload).encode("utf-8"))
+
         _logger.info("sent a payload for a heartbeat")
+        self._socket.sendall(json.dumps(payload).encode("utf-8"))
 
     # TODO: Handle the response from GSPRO
     def launch_ball(self, ball_data: BallData, club_data: ClubHeadData = None) -> None:
@@ -57,7 +72,7 @@ class GSProConnect:
             "BallData": {
                 "Speed": ball_data.ballspeed,
                 "SpinAxis": ball_data.spinaxis,
-                # "TotalSpin": ball_data.totalspin,
+                "TotalSpin": ball_data.totalspin,
                 "BackSpin": ball_data.backspin,
                 "SideSpin": ball_data.sidespin,
                 "HLA": ball_data.hla,
@@ -82,9 +97,11 @@ class GSProConnect:
                 "ClosureRate": club_data.closurerate,
             }
 
+        api_data = remove_none(api_data)
         print(json.dumps(api_data, indent=4))
 
         self._socket.sendall(json.dumps(api_data).encode("utf-8"))
+        print("data sent")
         response = self._socket.recv(8192)
         print("response from socket")
         print(response)

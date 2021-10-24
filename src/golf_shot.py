@@ -3,14 +3,14 @@ from dataclasses import dataclass, field
 
 @dataclass
 class BallData:
-    ballspeed: float = field(default=0.0)
-    spinaxis: float = field(default=0.0)
-    totalspin: float = field(default=0.0)
-    backspin: float = field(default=0.0)
-    sidespin: float = field(default=0.0)
-    hla: float = field(default=0.0)
-    vla: float = field(default=0.0)
-    carry: float = field(default=0)
+    ballspeed: float = field(default=None)
+    spinaxis: float = field(default=None)
+    totalspin: float = field(default=None)
+    backspin: float = field(default=None)
+    sidespin: float = field(default=None)
+    hla: float = field(default=None)
+    vla: float = field(default=None)
+    carry: float = field(default=None)
 
 
 @dataclass
