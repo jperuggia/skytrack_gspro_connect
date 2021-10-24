@@ -52,21 +52,28 @@ def main():
     # That the users device has a valid license for skytrack.
     _logger.info("Skytrack data obtained")
 
-    # simulate a :BOMB:
-    ball_data = BallData(
-        ballspeed=166.8,
-        spinaxis=-13.2,
-        totalspin=2350.2,
-        backspin=2350.2,
-        sidespin=0.0,
-        hla=0.0,
-        vla=13.5,
-        carry=300.0,
-    )
+    send_ball = int(input("Send ball data?"))
 
-    club_head_data = ClubHeadData()
+    # send a heartbeat?
+    SkyTrackConnect.send_heartbeat()
 
-    SkyTrackConnect.launch_ball(ball_data, club_head_data)
+    while send_ball:
+        # simulate a :BOMB:
+        ball_data = BallData(
+            ballspeed=184.5,
+            spinaxis=-1.0,
+            # totalspin=2500.0,
+            backspin=2200.0,
+            sidespin=1.0,
+            hla=1.0,
+            vla=14.5,
+            carry=312.5,
+        )
+
+        club_head_data = ClubHeadData()
+
+        SkyTrackConnect.launch_ball(ball_data, club_head_data)
+        send_ball = int(input("Send ball data?"))
 
     #  Close this socket port.
     SkyTrackConnect.terminate_session()
