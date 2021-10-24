@@ -1,7 +1,10 @@
-device_id: 'skytrack'
+device_id: 'Garmin-R10'
 units: 'Yards'
 club_data: False
 gspro:
   api_version: 1
   ip_address: 127.0.0.1
   port: 921
+garmin:
+  ip_address: 192.168.0.0 # change this to your ip from garmin
+  port: 1234 # chnage this to your port from garmin
